@@ -2,10 +2,14 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 
+const Orders = lazy(() => import("./pages/Orders"));
+const OrderDetails = lazy(() => import("./pages/Order-Details"));
 const Home = lazy(() => import("./pages/Home"));
+const Login = lazy(() => import("./pages/Login"));
 const Search = lazy(() => import("./pages/Search"));
 const Loader = lazy(() => import("./components/Loader"));
 const Cart = lazy(() => import("./pages/Cart"));
+const Shipping = lazy(() => import("./pages/Shipping"));
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
 const Products = lazy(() => import("./pages/admin/products"));
 const Customers = lazy(() => import("./pages/admin/customers"));
@@ -26,12 +30,20 @@ const TransactionManagement = lazy(
 const App = () => {
   return (
     <Router>
-      <Header/>
+      <Header />
       <Suspense fallback={<Loader />}>
         <Routes>
+
+          {/* {Not Logged in User Routes} */}
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Login />} />
+
+          {/* {Logged in User Routes} */}
+          <Route path="/shipping" element={<Shipping />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:id" element={<OrderDetails />} />
 
           {/* {admin-route} */}
           <Route

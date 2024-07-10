@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 
 const user = {
-  _id: 1,
+  _id: "a",
   role: "admin",
 };
 
