@@ -7,16 +7,22 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { useState } from "react";
+import { User } from "../types/types";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import toast from "react-hot-toast";
 
-const user = {
-  _id: "a",
-  role: "admin",
-};
+interface PropsType {
+  user: User | null;
+}
 
-const Header = () => {
+const Header = ({ user }: PropsType) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const LogOutHandler = () => {
-    setIsOpen(false);
+  const LogOutHandler = async () => {
+    try {
+      await signOut(auth);
+      toast.success("Sign Out");
+    } catch (error) {}
   };
   return (
     <nav className="header">
