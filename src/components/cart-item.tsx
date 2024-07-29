@@ -1,21 +1,35 @@
 import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-const CartItem = ({ cartitem }: { cartitem: any }) => {
-  const { photo, productid, name, price, quantity } = cartitem;
+import { server } from "../redux/store";
+import { cartItem } from "../types/types";
+
+type cartItemsProps = {
+  cartitem: cartItem;
+  incrementhandler: (cartItem: cartItem) => void;
+  decrementhandler: (cartItem: cartItem) => void;
+  removehandler: (id: string) => void;
+};
+const CartItem = ({
+  cartitem,
+  incrementhandler,
+  decrementhandler,
+  removehandler,
+}: cartItemsProps) => {
+  const { photo, productId, name, price, quantity } = cartitem;
   return (
     <div className="cart-item">
-      <img src={photo} alt="" />
+      <img src={`${server}/${photo}`} alt="" />
       <article>
-        <Link to={`/product/${productid}`}>{name}</Link>
+        <Link to={`/product/${productId}`}>{name}</Link>
         <span>₹{price}</span>
       </article>
       <div>
-        <button>-</button>
+        <button onClick={() => decrementhandler(cartitem)}>-</button>
         <p>{quantity}</p>
-        <button>+</button>
+        <button onClick={() => incrementhandler(cartitem)}>+</button>
       </div>
       <button>
-        <FaTrash />{" "}
+        <FaTrash onClick={() => removehandler(productId)} />{" "}
       </button>
     </div>
   );
