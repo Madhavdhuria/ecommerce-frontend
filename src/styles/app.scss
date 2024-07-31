@@ -62,7 +62,7 @@ $color3: rgb(0, 104, 136);
 
 .header {
   @include flex(row, flex-end, stretch, 1.2rem);
-
+  padding: 1rem;
   a {
     color: $color2;
     letter-spacing: 2px;
@@ -291,5 +291,13 @@ $color3: rgb(0, 104, 136);
   }
   100% {
     opacity: 0.6;
+  }
+}
+
+.not-found {
+  height: 80vh;
+  @include flex(column);
+  > svg {
+    font-size: 4rem;
   }
 }

@@ -1,8 +1,14 @@
-import { ReactElement } from "react";
-import TableHOC from "../components/admin/TableHOC";
-import { Column } from "react-table";
+import { ReactElement, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Column } from "react-table";
+import TableHOC from "../components/admin/TableHOC";
+import { Skelton } from "../components/Loader";
+import { useMyOrdersQuery } from "../redux/api/OrderApi";
+import { customerror } from "../types/api-types";
+import { UserReducerInitialState } from "../types/reducer-types";
+
 type DataType = {
   _id: string;
   amount: number;
@@ -11,55 +17,85 @@ type DataType = {
   status: ReactElement;
   action: ReactElement;
 };
+
 const column: Column<DataType>[] = [
   {
     Header: "ID",
     accessor: "_id",
   },
   {
-    Header: "AMOUNT",
-    accessor: "amount",
-  },
-  {
-    Header: "QUANTITY",
+    Header: "Quantity",
     accessor: "quantity",
   },
   {
-    Header: "DISCOUNT",
+    Header: "Discount",
     accessor: "discount",
   },
   {
-    Header: "STATUS",
+    Header: "Amount",
+    accessor: "amount",
+  },
+  {
+    Header: "Status",
     accessor: "status",
   },
   {
-    Header: "ACTION",
+    Header: "Action",
     accessor: "action",
   },
 ];
 
 const Orders = () => {
-  const [rows] = useState<DataType[]>([
-    {
-      _id: "string",
-      amount: 2322342,
-      quantity: 2,
-      discount: 23,
-      status: <span className="red">Processing</span>,
-      action: <Link to={"/orders/adasdfds"}>View</Link>,
-    },
-  ]);
-  const table = TableHOC<DataType>(
+  const { user } = useSelector(
+    (state: { userReducer: UserReducerInitialState }) => state.userReducer
+  );
+
+  const { isLoading, data, isError, error } = useMyOrdersQuery(user?._id!);
+
+  const [rows, setRows] = useState<DataType[]>([]);
+
+  if (isError) {
+    const err = error as customerror;
+    toast.error(err.data.message);
+  }
+
+  useEffect(() => {
+    if (data)
+      setRows(
+        data.orders.map((i) => ({
+          _id: i._id,
+          amount: i.total,
+          discount: i.discount,
+          quantity: i.orderItems.length,
+          status: (
+            <span
+              className={
+                i.status === "Processing"
+                  ? "red"
+                  : i.status === "Shipped"
+                  ? "green"
+                  : "purple"
+              }
+            >
+              {i.status}
+            </span>
+          ),
+          action: <Link to={`/admin/transaction/${i._id}`}>Manage</Link>,
+        }))
+      );
+  }, [data]);
+
+  const Table = TableHOC<DataType>(
     column,
     rows,
     "dashboard-product-box",
-    "orders",
+    "Orders",
     rows.length > 6
-  );
+  )();
   return (
     <div className="container">
       <h1>My Orders</h1>
-      {table()}
+      {isLoading ? <Skelton length={20} /> : Table}
     </div>
   );
 };

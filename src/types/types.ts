@@ -22,7 +22,7 @@ export type shippingInfo = {
   city: string;
   state: string;
   country: string;
-  pincode: string;
+  pinCode: string;
 };
 
 export type cartItem = {
@@ -31,5 +31,23 @@ export type cartItem = {
   name: string;
   price: number;
   quantity: number;
-  stock:number;
+  stock: number;
+};
+
+export type OrderItem = Omit<cartItem, "stock"> & { _id: string };
+
+export type Order = {
+  orderItems: OrderItem[];
+  shippingInfo: shippingInfo;
+  subtotal: number;
+  tax: number;
+  ShippingCharges: number;
+  discount: number;
+  total: number;
+  status: string;
+  user: {
+    name: string;
+    _id: string;
+  };
+  _id: string;
 };

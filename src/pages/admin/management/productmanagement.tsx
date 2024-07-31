@@ -38,8 +38,8 @@ const Productmanagement = () => {
       };
     }
   };
-  const { data, isLoading } = useProductDetailQuery(params.id!);
-
+  const { data, isLoading, isError } = useProductDetailQuery(params.id!);
+  if (isError) <Navigate to={"/404"} />;
   const { stock, price, name, category, photo } = data
     ? data?.product
     : {
