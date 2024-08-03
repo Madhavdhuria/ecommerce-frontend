@@ -64,8 +64,8 @@ const Login = () => {
 
         <div>
           <p>Already Signed In Once</p>
-          <button>
-            <FcGoogle onClick={Loginhandler} /> <span>Sign in with Google</span>
+          <button onClick={Loginhandler}>
+            <FcGoogle /> <span>Sign in with Google</span>
           </button>
         </div>
       </main>

@@ -1,23 +1,19 @@
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+import { categories } from "../../../assets/data.json";
 import AdminSidebar from "../../../components/admin/AdminSidebar";
 import { DoughnutChart, PieChart } from "../../../components/admin/Charts";
-import { categories } from "../../../assets/data.json";
-import { UserReducerInitialState } from "../../../types/reducer-types";
-import { useSelector } from "react-redux";
-import { usePieQuery } from "../../../redux/api/dashboardapi";
-import { customerror } from "../../../types/api-types";
-import toast from "react-hot-toast";
 import { Skelton } from "../../../components/Loader";
+import { usePieQuery } from "../../../redux/api/dashboardapi";
+import { UserReducerInitialState } from "../../../types/reducer-types";
 
 const PieCharts = () => {
   const { user } = useSelector(
     (state: { userReducer: UserReducerInitialState }) => state.userReducer
   );
-  const { isLoading, data, isError, error } = usePieQuery(user?._id!);
+  const { isLoading, data, isError } = usePieQuery(user?._id!);
 
-  if (isError) {
-    const err = error as customerror;
-    toast.error(err.data.message);
-  }
+  if (isError) return <Navigate to={"/admin/dashboard"} />;
   const charts = data?.charts!;
 
   return (

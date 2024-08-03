@@ -117,39 +117,15 @@ export type Pie = {
   };
 };
 
+export type Bar = {
+  users: number[];
+  products: number[];
+  orders: number[];
+};
 
-// {
-//   "success": true,
-//   "charts": {
-//       "orderFullfillment": {
-//           "Processing": 0,
-//           "Shipped": 0,
-//           "Delivered": 0
-//       },
-//       "productCategories": [
-//           {
-//               "laptop": 100
-//           }
-//       ],
-//       "stockAvailablity": {
-//           "InStock": 1,
-//           "OutOfStack": 0
-//       },
-//       "revenueDistribution": {
-//           "netMargin": 0,
-//           "discount": 0,
-//           "productionCost": 0,
-//           "burnt": 0,
-//           "marketingCost": 0
-//       },
-//       "usersAgeGroup": {
-//           "teen": 0,
-//           "adult": 1,
-//           "old": 0
-//       },
-//       "adminCustomer": {
-//           "admin": 1,
-//           "customer": 0
-//       }
-//   }
-// }
+export type Line = {
+  usersCounts: number[];
+  productCounts: number[];
+  discount: number[];
+  revenue: number[];
+};

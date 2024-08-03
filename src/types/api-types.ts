@@ -1,4 +1,4 @@
-import { cartItem, Order, Pie, Product, shippingInfo, Stats, User } from "./types";
+import { Bar, cartItem, Line, Order, Pie, Product, shippingInfo, Stats, User } from "./types";
 
 export type customerror = {
   status: number;
@@ -57,6 +57,16 @@ export type statsResponse = {
 export type PieResponse = {
   success: boolean;
   charts: Pie;
+};
+
+export type BarResponse = {
+  success: boolean;
+  charts: Bar;
+};
+
+export type LineResponse = {
+  success: boolean;
+  charts: Line;
 };
 
 export type SearchProductsParams = {

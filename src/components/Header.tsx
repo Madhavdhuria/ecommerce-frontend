@@ -26,11 +26,28 @@ const Header = ({ user }: PropsType) => {
   };
   return (
     <nav className="header">
-      <Link to={"/"}>HOME</Link>
-      <Link to={"/search"}>
+      <Link
+        onClick={() => {
+          if (isOpen) setIsOpen((prev) => !prev);
+        }}
+        to={"/"}
+      >
+        HOME
+      </Link>
+      <Link
+        onClick={() => {
+          if (isOpen) setIsOpen((prev) => !prev);
+        }}
+        to={"/search"}
+      >
         <FaSearch />
       </Link>
-      <Link to={"/cart"}>
+      <Link
+        onClick={() => {
+          if (isOpen) setIsOpen((prev) => !prev);
+        }}
+        to={"/cart"}
+      >
         <FaShoppingBag />
       </Link>
 
@@ -42,10 +59,17 @@ const Header = ({ user }: PropsType) => {
           <dialog open={isOpen}>
             <div>
               {user.role === "admin" && (
-                <Link to="/admin/dashboard">Admin</Link>
+                <Link
+                  onClick={() => setIsOpen((prev) => !prev)}
+                  to="/admin/dashboard"
+                >
+                  Admin
+                </Link>
               )}
 
-              <Link to="/orders">Orders</Link>
+              <Link onClick={() => setIsOpen((prev) => !prev)} to="/orders">
+                Orders
+              </Link>
               <button onClick={LogOutHandler}>
                 <FaSignOutAlt />
               </button>
