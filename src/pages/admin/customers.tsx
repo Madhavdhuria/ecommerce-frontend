@@ -56,7 +56,7 @@ const Customers = () => {
     responseToast(res, null, "");
   };
   const [rows, setRows] = useState<DataType[]>([]);
-  const { user, loading } = useSelector(
+  const { user } = useSelector(
     (state: { userReducer: UserReducerInitialState }) => state.userReducer
   );
   const { isLoading, data, isError, error } = useAllusersQuery(user?._id!);
